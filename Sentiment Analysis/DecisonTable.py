@@ -1,0 +1,7 @@
+
+
+class decisiontable:
+
+	def buildClassifier:
+
+		

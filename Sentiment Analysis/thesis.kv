@@ -1,0 +1,247 @@
+#:import main ThesisUI
+#:import Factory kivy.factory.Factory
+#: import ListItemButton kivy.uix.listview.ListItemButton
+#: import ListAdapter kivy.adapters.listadapter.ListAdapter
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+
+<Screen>:
+	canvas:
+		Color:
+			rgb: .91, .92, .93
+		Rectangle:
+			size: self.size
+
+<ScreenOne>:
+	canvas.after:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'assets/splashscreen.png'
+
+<ScreenTwo>:
+
+	BoxLayout:
+
+		orientation: 'vertical'
+
+		BoxLayout:
+
+			orientation: 'horizontal'
+			size_hint_y: None
+			height: '65dp'
+			padding: '5dp'
+
+			canvas:
+				Color:
+					rgb: .265, .405, .70
+				Rectangle:
+					pos: self.pos
+					size: self.size
+
+			Button:
+				text: ''
+				color: (0, 0, 0, 1)
+	            background_color: (1, 1, 1, 0)
+	            size_hint_x: None
+	            width: self.height
+				on_press: root.show_load()
+	            Image:
+            		source: 'assets/custom-small.png'
+            		y: self.parent.y + self.parent.height - 50
+		            x: self.parent.x
+		            size: 65, 45
+
+			Label:
+				text: 'F A C E B O O K  P O S T \' S'
+				font_size: '25sp'
+
+			Button:
+				text: ''
+				color: (0, 0, 0, 1)
+	            background_color: (1, 1, 1, 0)
+	            size_hint_x: None
+	            width: self.height
+	            on_press: app.refresh_post()
+	            Image:
+            		source: 'assets/refresh-small.png'
+            		y: self.parent.y + self.parent.height - 50
+		            x: self.parent.x
+		            size: 45, 45
+		            
+        ListView:
+        	id: post_list_view
+        	adapter:
+            	ListAdapter(data=root.data, cls=Factory.PostList,args_converter=root.args_converter)
+<PostList>:
+
+    size_hint_y: None
+
+    BoxLayout:
+
+        Button:
+			text: root.message
+			color: (0, 0, 0, 1)
+			background_color: (255,255,255,1)
+			text_size: self.width, None
+			halign: 'center'
+			padding: 10, 10
+			valign: 'center'
+			on_press: app.goto_comments(root.post_index)
+
+
+# <ListItem>: 
+#     size: (10, 100)
+#     spacing: 200
+#     color: (0, 0, 0, 1)
+#     selected_color: 255, 255, 255, 1  
+#     deselected_color: 255, 255, 255, 1
+#     text_size: self.width, None
+#     size_hint: 1, None
+#     halign: 'center'
+#     valign: 'center'
+#     padding: 100,20
+
+<PostView>:
+	
+	BoxLayout:
+
+		orientation: 'vertical'
+		spacing: 10,10
+
+		BoxLayout:
+
+			orientation: 'horizontal'
+			size_hint_y: None
+			height: '65dp'
+			padding: '5dp'
+
+			canvas:
+				Color:
+					rgb: .265, .405, .70
+				Rectangle:
+					pos: self.pos
+					size: self.size
+
+			Button:
+				text: ''
+				color: (0, 0, 0, 1)
+	            background_color: (1, 1, 1, 0)
+	            size_hint_x: None
+	            width: self.height
+	            on_press: app.goto_post()
+	            Image:
+            		source: 'assets/back-small.png'
+            		y: self.parent.y + self.parent.height - 50
+		            x: self.parent.x
+		            size: 65, 45
+
+			Label:
+				text: 'C O M M E N T \' S'
+				font_size: '25sp'
+
+			Button:
+				text: ''
+				color: (0, 0, 0, 1)
+	            background_color: (1, 1, 1, 0)
+	            size_hint_x: None
+	            width: self.height
+	            on_press: app.refresh_comment()
+	            Image:
+            		source: 'assets/refresh-small.png'
+            		y: self.parent.y + self.parent.height - 50
+		            x: self.parent.x
+		            size: 45, 45
+
+		BoxLayout:
+			canvas:
+				Color:
+					rgb: .265, .405, .70
+				Rectangle:
+					pos: self.pos
+					size: self.size
+			size_hint_y: 0.3
+			Label:
+				text: root.message
+				color: (1, 1, 1, 1)
+				font_size: '20sp'
+				text_size: self.width, None
+				halign: 'center'
+				valign: 'center'
+		            
+        ListView:
+        	id: comment_list_view
+        	adapter:
+            	ListAdapter(data=root.data2, cls=Factory.CommentList,args_converter=root.args_converter)
+
+    	Button:
+			text: ''
+			background_normal: 'assets/sa-long.png'
+			background_down: 'assets/sa-down.png'
+			size_hint: (1, 0.139)
+			on_press: root.selectChart()
+			# color: (0, 0, 0, 1)
+			# background_color: (1, 1, 1, 1)
+            # on_press: app.refresh_comment()
+
+<CommentList>:
+
+    size_hint_y: None
+
+    BoxLayout:
+
+        Button:
+			text: root.message
+			color: (0, 0, 0, 1)
+			background_color: (255,255,255,1)
+			text_size: self.width, None
+			halign: 'center'
+			padding: 10, 10
+			valign: 'center'
+			on_press: print("hahaha")
+
+		Button:
+			text: "+"
+			color: (0, 0, 0, 1)
+			size_hint_x: 0.1
+			background_color: (255,255,255,1)
+			text_size: self.width, None
+			halign: 'center'
+			padding: 10, 10
+			valign: 'center'
+
+
+<LoadDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserListView:
+            path: '/documents/Training Data'
+            dirselect: True
+            id: filechooser
+            filter: ['*.csv']
+            multiselect: False
+            on_selection: root.load(filechooser.path, filechooser.selection)
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+
+            Button:
+                text: "Load"
+                on_release: root.load_selected(filechooser.selection)
+
+<chart>:
+	title: 'Stats:'
+    title_color: [1,1,1,1]
+    size_hint: 0.8, 0.8
+    canvas:
+		Color:
+			rgb: 1, 1, 1
+    	Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'assets/results.png'
