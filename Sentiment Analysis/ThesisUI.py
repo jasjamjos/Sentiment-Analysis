@@ -28,6 +28,19 @@ from kivy.uix.filechooser import FileChooserListView
 from kivy.properties import ObjectProperty, StringProperty, ListProperty, NumericProperty
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition, SlideTransition
 
+import matplotlib
+matplotlib.use('module://kivy.garden.matplotlib.backend_kivy')
+from matplotlib.figure import Figure
+from numpy import arange, sin, pi
+from kivy.app import App
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.transforms import Bbox
+from kivy.graphics import Color, Line, Rectangle
+from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas,\
+                                                NavigationToolbar2Kivy
+
 Window.size = (1000,700)
 
 token = 'EAAB7Egkv9eUBADkz4uYTwqY1KQU4HFPtU75TW8lNk3ixCwkUNWfeIDVnjaSBeMfldynH8CIvtRg318RYxDRCYjTHuoSsm9IAJjkCnZC4bIZBmo9TaqHtZCqA1ZAcVPiCyyF5qoBPohQJ7qcNFB2ZCydczbwgFe6OMPsztHeWvBQZDZD'
@@ -54,7 +67,23 @@ class data_cleaning:
         pass
 
 class chart(Popup):
-	pass
+    N = 1
+    positive = 11
+    negative = 11
+    ind = np.arange(N)    # the x locations for the groups
+    width = 0.02     # the width of the bars: can also be len(x) sequence
+
+    fig, plt = plt.subplots()
+    rects1 = plt.bar(ind, positive, width, color='#4bf3a2')
+
+    rects2 = plt.bar(ind + width, negative, width, color='#f25454')
+
+    # add some text for labels, title and axes ticks
+    plt.set_xticklabels(ind)
+    plt.set_yticks((np.arange(0, 1.1, 0.10)))
+    plt.legend((rects1[0], rects2[0]), ('Postive', 'Negative'))
+
+    canvas = fig.canvas
 
 class LoadDialog(FloatLayout):
     load = ObjectProperty(None)

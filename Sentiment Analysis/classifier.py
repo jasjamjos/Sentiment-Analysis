@@ -1,7 +1,6 @@
 import random
 import math
 import csv
-import NLTK
 
 
 # print(dataset)

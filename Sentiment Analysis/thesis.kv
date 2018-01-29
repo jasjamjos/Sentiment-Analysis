@@ -164,6 +164,7 @@
 				text: root.message
 				color: (1, 1, 1, 1)
 				font_size: '20sp'
+				padding: 10, 10
 				text_size: self.width, None
 				halign: 'center'
 				valign: 'center'
@@ -173,15 +174,21 @@
         	adapter:
             	ListAdapter(data=root.data2, cls=Factory.CommentList,args_converter=root.args_converter)
 
-    	Button:
-			text: ''
-			background_normal: 'assets/sa-long.png'
-			background_down: 'assets/sa-down.png'
-			size_hint: (1, 0.139)
+	
+    FloatLayout:
+		Button:
+		    text: ""
+			pos_hint: {"x": 0, 'y':0}
+			font_size: 40
+			color: (0, 0, 0, 1)
+	        background_color: (1, 1, 1, 0)
+			size_hint: 0.1, 0.1
 			on_press: root.selectChart()
-			# color: (0, 0, 0, 1)
-			# background_color: (1, 1, 1, 1)
-            # on_press: app.refresh_comment()
+			Image:
+        		source: 'assets/icon.png'
+        		y: self.parent.y + self.parent.height - 50
+	            x: self.parent.x + 1
+	            size: 80, 80
 
 <CommentList>:
 
@@ -197,7 +204,7 @@
 			halign: 'center'
 			padding: 10, 10
 			valign: 'center'
-			on_press: print("hahaha")
+			on_press: root.selectChart()
 
 		Button:
 			text: "+"
